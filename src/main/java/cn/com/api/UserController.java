@@ -17,60 +17,50 @@ public class UserController {
     private UserService userService;
 
     @GetRoute("loginCellphone")
-    @JSON
-    public String loginCellphone(@Param String phone, @Param String password, Response response) {
+    public void loginCellphone(@Param String phone, @Param String password, Response response) {
         try {
-            return userService.loginCellphone(phone, password, response);
+            response.json(userService.loginCellphone(phone, password, response));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("login")
-    @JSON
-    public String login(@Param String email, @Param String password) {
+    public void login(@Param String email, @Param String password,Response response) {
         try {
-            return userService.login(email, password);
+            response.json(userService.login(email, password));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("recommendSongs")
-    @JSON
-    public String recommendSongs(@CookieParam("WY_TOKEN") String token) {
+    public void recommendSongs(@CookieParam("WY_TOKEN") String token,Response response) {
         try {
             String cookie = URLDecoder.decode(token, "utf-8");
-            return userService.recommendSongs(cookie);
+            response.json(userService.recommendSongs(cookie));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("recommendResource")
-    @JSON
-    public String recommendResource(@CookieParam("WY_TOKEN") String token, Request request,Response response) {
+    public void recommendResource(@CookieParam("WY_TOKEN") String token, Request request,Response response) {
         try {
             String cookie = URLDecoder.decode(token, "utf-8");
-            return userService.recommendResource(cookie);
+            response.json(userService.recommendResource(cookie));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("userPlayList")
-    @JSON
-    public String userPlayList(@Param String uid, @Param(defaultValue = "30") Integer limit, @Param(defaultValue = "0") Integer offset) {
+    public void userPlayList(@Param String uid, @Param(defaultValue = "30") Integer limit, @Param(defaultValue = "0") Integer offset,Response response) {
         try {
-            return userService.userPlayList(uid, limit, offset);
+            response.json(userService.userPlayList(uid, limit, offset));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
 }

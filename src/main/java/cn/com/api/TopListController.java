@@ -3,9 +3,9 @@ package cn.com.api;
 import cn.com.service.TopListService;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.JSON;
 import com.blade.mvc.annotation.Param;
 import com.blade.mvc.annotation.Path;
+import com.blade.mvc.http.Response;
 
 
 /**
@@ -18,24 +18,20 @@ public class TopListController {
     private TopListService topListService;
 
     @GetRoute("top/list")
-    @JSON
-    public String topList(@Param String idx, @Param(defaultValue = "10000") Integer n) {
+    public void topList(@Param String idx, @Param(defaultValue = "10000") Integer n, Response response) {
         try {
-            return topListService.topList(idx, n);
+            response.json(topListService.topList(idx, n));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("toplist/detail")
-    @JSON
-    public String toplistDetail() {
+    public void toplistDetail(Response response) {
         try {
-            return topListService.toplistDetail();
+            response.json(topListService.toplistDetail());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

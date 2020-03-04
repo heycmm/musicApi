@@ -4,6 +4,7 @@ package cn.com.api;
 import cn.com.service.CommonService;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.*;
+import com.blade.mvc.http.Response;
 
 /**
  * 公共数据
@@ -15,40 +16,35 @@ public class CommonController {
     private CommonService commonService;
 
     @GetRoute("banner")
-    @JSON
-    public String banner(@Param(defaultValue = "0") Integer type) {
+    public void banner(@Param(defaultValue = "0") Integer type, Response response) {
         try {
-            return commonService.banner(type);
+            response.json(commonService.banner(type));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("album")
-    @JSON
-    public String album(@Param String id) {
+    public void album(@Param String id, Response response) {
         try {
-            return commonService.album(id);
+            response.json(commonService.album(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @PostRoute("commentHot")
-    @JSON
-    public String commentHot(
+    public void commentHot(
             @Param Integer type,
             @Param String id,
-            @Param( defaultValue = "20") Integer limit,
-            @Param( defaultValue = "0") Integer offset) {
+            @Param(defaultValue = "20") Integer limit,
+            @Param(defaultValue = "0") Integer offset,
+            Response response) {
         try {
-            return commonService.commentHot(type, id, limit, offset);
+            response.json(commonService.commentHot(type, id, limit, offset));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
 }

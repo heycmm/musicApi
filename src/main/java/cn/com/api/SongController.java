@@ -3,9 +3,9 @@ package cn.com.api;
 import cn.com.service.SongService;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.JSON;
 import com.blade.mvc.annotation.Param;
 import com.blade.mvc.annotation.Path;
+import com.blade.mvc.http.Response;
 
 
 /**
@@ -18,68 +18,56 @@ public class SongController {
     private SongService songService;
 
     @GetRoute("song/detail")
-    @JSON
-    public String songDetail(@Param String ids) {
+    public void songDetail(@Param String ids, Response response) {
         try {
-            return songService.songDetail(ids);
+            response.json(songService.songDetail(ids));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("song/url")
-    @JSON
-    public String songUrl(@Param String id, @Param(defaultValue = "999000") Integer br) {
+    public void songUrl(@Param String id, @Param(defaultValue = "999000") Integer br, Response response) {
         try {
-            return songService.songUrl(id, br);
+            response.json(songService.songUrl(id, br));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("lyric")
-    @JSON
-    public String lyric(@Param String id) {
+    public void lyric(@Param String id, Response respons) {
         try {
-            return songService.lyric(id);
+            respons.json(songService.lyric(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("comment/music")
-    @JSON
-    public String commentMusic(@Param String id, @Param(defaultValue = "20") Integer limit, @Param(defaultValue = "0") Integer offset) {
+    public void commentMusic(@Param String id, @Param(defaultValue = "20") Integer limit, @Param(defaultValue = "0") Integer offset, Response respons) {
         try {
-            return songService.commentMusic(id, limit, offset);
+            respons.json(songService.commentMusic(id, limit, offset));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("personalized/newsong")
-    @JSON
-    public String personalizedNewsong() {
+    public void personalizedNewsong(Response respons) {
         try {
-            return songService.personalizedNewsong();
+            respons.json(songService.personalizedNewsong());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("top/song")
-    @JSON
-    public String topSong(@Param(defaultValue = "0") Integer type) {
+    public void topSong(@Param(defaultValue = "0") Integer type, Response respons) {
         try {
-            return songService.topSong(type);
+            respons.json(songService.topSong(type));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

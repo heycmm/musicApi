@@ -3,9 +3,9 @@ package cn.com.api;
 import cn.com.service.SearchService;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.JSON;
 import com.blade.mvc.annotation.Param;
 import com.blade.mvc.annotation.Path;
+import com.blade.mvc.http.Response;
 
 /**
  * 搜索模块
@@ -18,45 +18,39 @@ public class SearchController {
 
 
     @GetRoute("search/suggest")
-    @JSON
-    public String searchSuggest(@Param String keywords, @Param(defaultValue = "mobile") String type) {
+    public void searchSuggest(@Param String keywords, @Param(defaultValue = "mobile") String type, Response response) {
         try {
-            return searchService.searchSuggest(keywords, type);
+            response.json(searchService.searchSuggest(keywords, type));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("search/hot")
-    @JSON
-    public String searchHot() {
+    public void searchHot(Response response) {
         try {
-            return searchService.searchHot();
+            response.json(searchService.searchHot());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("search/hot/detail")
-    @JSON
-    public String searchHotDetail() {
+    public void searchHotDetail(Response response) {
         try {
-            return searchService.searchHotDetail();
+            response.json(searchService.searchHotDetail());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("search")
-    public String search(@Param String keywords, @Param(defaultValue = "1") Integer type, @Param(defaultValue = "30") Integer limit, @Param(defaultValue = "0") Integer offset) {
+    public void search(@Param String keywords, @Param(defaultValue = "1") Integer type, @Param(defaultValue = "30") Integer limit, @Param(defaultValue = "0") Integer offset, Response response) {
         try {
-            return searchService.search(keywords, type, limit, offset);
+            response.json(searchService.search(keywords, type, limit, offset));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+
     }
 }

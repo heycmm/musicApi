@@ -4,8 +4,8 @@ package cn.com.api;
 import cn.com.service.AlbumService;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.JSON;
 import com.blade.mvc.annotation.Path;
+import com.blade.mvc.http.Response;
 
 /**
  * 专辑
@@ -17,13 +17,11 @@ public class AlbumController {
     private AlbumService albumService;
 
     @GetRoute("album/newest")
-    @JSON
-    public String newAlbum() {
+    public void newAlbum(Response response) {
         try {
-            return albumService.newAlbum();
+            response.json(albumService.newAlbum());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

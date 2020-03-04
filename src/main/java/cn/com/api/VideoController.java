@@ -3,9 +3,9 @@ package cn.com.api;
 import cn.com.service.VideoService;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.JSON;
 import com.blade.mvc.annotation.Param;
 import com.blade.mvc.annotation.Path;
+import com.blade.mvc.http.Response;
 
 /**
  * 视频模块（0-MV、1-用户上传视频）
@@ -18,79 +18,65 @@ public class VideoController {
 
 
     @GetRoute("mv/detail")
-    @JSON
-    public String mvDetail(@Param String mvid) {
+    public void mvDetail(@Param String mvid, Response response) {
         try {
-            return videoService.mvDetail(mvid);
+            response.json(videoService.mvDetail(mvid));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("video/detail")
-    @JSON
-    public String videoDetail(@Param String id) {
+    public void videoDetail(@Param String id, Response response) {
         try {
-            return videoService.videoDetail(id);
+            response.json(videoService.videoDetail(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("mv/url")
-    @JSON
-    public String mvUrl(@Param String id) {
+    public void mvUrl(@Param String id, Response response) {
         try {
-            return videoService.mvUrl(id);
+            response.json(videoService.mvUrl(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("video/url")
-    @JSON
-    public String videoUrl(@Param String id) {
+    public void videoUrl(@Param String id, Response response) {
         try {
-            return videoService.videoUrl(id);
+            response.json(videoService.videoUrl(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("related/allvideo")
-    @JSON
-    public String relatedAllvideo(@Param String id) {
+    public void relatedAllvideo(@Param String id, Response response) {
         try {
-            return videoService.relatedAllvideo(id);
+            response.json(videoService.relatedAllvideo(id));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("comment/mv")
-    @JSON
-    public String commentMv(@Param String id, @Param(defaultValue = "20") Integer limit, @Param(defaultValue = "0") Integer offset) {
+    public void commentMv(@Param String id, @Param(defaultValue = "20") Integer limit, @Param(defaultValue = "0") Integer offset, Response response) {
         try {
-            return videoService.commentMv(id, limit, offset);
+            response.json(videoService.commentMv(id, limit, offset));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @GetRoute("comment/video")
-    @JSON
-    public String commentVideo(@Param String id, @Param(defaultValue = "20") Integer limit, @Param(defaultValue = "0") Integer offset) {
+    public void commentVideo(@Param String id, @Param(defaultValue = "20") Integer limit, @Param(defaultValue = "0") Integer offset, Response response) {
         try {
-            return videoService.commentVideo(id, limit, offset);
+            response.json(videoService.commentVideo(id, limit, offset));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 }
