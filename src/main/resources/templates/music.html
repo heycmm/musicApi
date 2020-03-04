@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>APlayer+网易云api</title>
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <link href="/static/css/app.css" rel="stylesheet">
+    <meta itemprop="image" content="/static/img/IMG_8123.JPG">
+    <link rel="shortcut icon" type="images/x-icon" href="/static/img/IMG_8123.JPG">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<canvas width="3360" height="1732"
+        style="position: absolute; top: 0px; left: 0px; z-index: 0; width: 100%; pointer-events: none;"></canvas>
+<div id="app">
+    <div class="landing">
+        <h1>APlayer+网易云api</h1>
+        <h3>仅供测试。</h3>
+        <div class="aplayer-wrap">
+
+            <div id="aplayer"></div>
+            <div id="aplayer1"></div>
+        </div>
+        <div class="landing-buttons">
+            <a class="landing-button" target="_blank" href="https://heycmm.cn/archives/1581935581">
+                关于接口
+            </a>
+            <a class="landing-button" target="_blank" href="https://github.com/proxygit/musicApi">
+                GitHub
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $.getJSON("${domain}/List/487943749", function (data) {
+        new APlayer({
+            container: document.getElementById('aplayer'),
+            mini: false,
+            autoplay: false,
+            theme: '#FADFA3',
+            loop: 'all',
+            lrcType: 3,
+            preload: 'auto',
+            volume: 0.7,
+            mutex: true,
+            listFolded: false,
+            audio: data
+        });
+    });
+    $.getJSON("${domain}/List/4869156922", function (data) {
+         new APlayer({
+            container: document.getElementById('aplayer1'),
+            fixed: true,
+            lrcType: 3,
+            preload: 'auto',
+            //autoplay: true,
+            listFolded: true,
+            listMaxHeight: '165px',
+            theme:"#66ccff",
+            audio: data
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+    })
+    var c = document.getElementsByTagName('canvas')[0],
+        x = c.getContext('2d'),
+        pr = window.devicePixelRatio || 1,
+        w = window.innerWidth,
+        h = window.innerHeight,
+        f = 90,
+        q,
+        m = Math,
+        r = 0,
+        u = m.PI * 2,
+        v = m.cos,
+        z = m.random
+    c.width = w * pr
+    c.height = h * pr
+    x.scale(pr, pr)
+    x.globalAlpha = 0.6
+
+    function i() {
+        x.clearRect(0, 0, w, h)
+        q = [{x: 0, y: h * .7 + f}, {x: 0, y: h * .7 - f}]
+        while (q[1].x < w + f) d(q[0], q[1])
+    }
+
+    function d(i, j) {
+        x.beginPath()
+        x.moveTo(i.x, i.y)
+        x.lineTo(j.x, j.y)
+        var k = j.x + (z() * 2 - 0.25) * f,
+            n = y(j.y)
+        x.lineTo(k, n)
+        x.closePath()
+        r -= u / -50
+        x.fillStyle = '#' + (v(r) * 127 + 128 << 16 | v(r + u / 3) * 127 + 128 << 8 | v(r + u / 3 * 2) * 127 + 128).toString(16)
+        x.fill()
+        q[0] = q[1]
+        q[1] = {x: k, y: n}
+    }
+
+    function y(p) {
+        var t = p + (z() * 2 - 1.1) * f
+        return (t > h || t < 0) ? y(p) : t
+    }
+
+    document.onclick = i
+    document.ontouchstart = i
+    i()
+</script>
+</html>
