@@ -54,10 +54,18 @@ public class UserController {
         }
     }
 
-    @GetRoute("userPlayList")
+    @GetRoute("user/playlist")
     public void userPlayList(@Param String uid, @Param(defaultValue = "30") Integer limit, @Param(defaultValue = "0") Integer offset,Response response) {
         try {
             response.json(userService.userPlayList(uid, limit, offset));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @GetRoute("user/detail")
+    public void mvDetail(@Param String uid, Response response) {
+        try {
+            response.json(userService.userDetail(uid));
         } catch (Exception e) {
             e.printStackTrace();
         }

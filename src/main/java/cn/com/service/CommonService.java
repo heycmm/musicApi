@@ -24,11 +24,7 @@ public class CommonService {
         }
     }
 
-    public String album(String id) throws Exception {
-        String url = mp.baseUrl + mp.album + "/" + id;
-        UrlParam up = Api.album(url);
-        return SendRequest.getMusicData(up);
-    }
+
 
     public String commentHot(Integer type, String id, Integer limit, Integer offset) throws Exception {
         String url = mp.baseUrl + mp.commentHot;
@@ -56,5 +52,6 @@ public class CommonService {
         UrlParam up = Api.commentMusic(url, id, limit, offset);
         return SendRequest.getMusicData(up);
     }
+
 
 }

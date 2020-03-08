@@ -81,4 +81,9 @@ public class UserService {
         }
     }
 
+    public String userDetail(String uid) throws Exception{
+        String url = mp.baseUrl + mp.userDetail;
+        UrlParam up = Api.userDetail(url, uid);
+        return SendRequest.getMusicData(up);
+    }
 }

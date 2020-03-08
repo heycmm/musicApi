@@ -18,4 +18,26 @@ public class AlbumService {
         UrlParam up = Api.album(url);
         return SendRequest.getMusicData(up);
     }
+    public String dynamic(String id) throws Exception{
+        String url = mp.baseUrl + mp.dynamic;
+        UrlParam up = Api.dynamic(url,id);
+        return SendRequest.getMusicData(up);
+    }
+
+    public String albumSublist(Integer limit, Integer offset) throws Exception{
+        String url = mp.baseUrl + mp.albumSublist;
+        UrlParam up = Api.albumSublist(url,limit,offset);
+        return SendRequest.getMusicDataByCookie(up);
+    }
+    public String album(String id) throws Exception {
+        String url = mp.baseUrl + mp.album + "/" + id;
+        UrlParam up = Api.album(url);
+        return SendRequest.getMusicData(up);
+    }
+
+    public String albumArtists(Integer limit, Integer offset, String id) throws Exception{
+        String url = mp.baseUrl + mp.albumArtists + "/" + id;
+        UrlParam up = Api.albumArtists(url,limit,offset);
+        return SendRequest.getMusicData(up);
+    }
 }

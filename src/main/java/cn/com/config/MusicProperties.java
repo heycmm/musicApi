@@ -152,4 +152,47 @@ public class MusicProperties {
     @Value(name = "domain")
     public String domain;
 
+    // 专辑动态信息
+    @Value(name = "detailDynamic")
+    public String dynamic;
+
+    //已收藏专辑列表
+    @Value(name = "albumSublist")
+    public String albumSublist;
+
+    // 歌手专辑列表
+    @Value(name = "albumArtists")
+    public String albumArtists;
+
+    // 推荐MV
+    @Value(name = "personalizedMv")
+    public String personalizedMv;
+
+    // 相似歌单
+    @Value(name = "discoverySiMiPlaylist")
+    public String discoverySiMiPlaylist;
+
+    // 相似歌曲
+    @Value(name = "siMiSong")
+    public String siMiSong;
+
+    // 精品歌单
+    @Value(name = "topPlaylistHighQuality")
+    public String topPlaylistHighQuality;
+
+    // 全部MV
+    @Value(name = "mvAll")
+    public String mvAll;
+
+    // 相似MV
+    @Value(name = "siMiMv")
+    public String siMiMv;
+
+
+    // 用户详情
+    @Value(name = "userDetail")
+    public String userDetail;
+
+
+
 }

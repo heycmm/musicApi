@@ -70,4 +70,15 @@ public class SongController {
             e.printStackTrace();
         }
     }
+    @GetRoute("simi/song")
+    public void siMiSong(@Param String id,
+                         @Param(defaultValue = "50") Integer limit,
+                         @Param(defaultValue = "0") Integer offset,
+                         Response response) {
+        try {
+            response.json(songService.siMiSong(id, limit,offset));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

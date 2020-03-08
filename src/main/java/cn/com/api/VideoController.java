@@ -16,11 +16,33 @@ public class VideoController {
     @Inject
     private VideoService videoService;
 
-
+    @GetRoute("mv/all")
+    public void mvAll(
+                      @Param(defaultValue = "全部") String area,
+                      @Param(defaultValue = "上升最快") String order,
+                      @Param(defaultValue = "全部") String type,
+                      @Param(defaultValue = "30") Integer limit,
+                      @Param(defaultValue = "0") Integer offset,
+                      Response response) {
+        try {
+            response.json(videoService.mvAll(area,order,type,limit,offset));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @GetRoute("mv/detail")
     public void mvDetail(@Param String mvid, Response response) {
         try {
             response.json(videoService.mvDetail(mvid));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetRoute("simi/mv")
+    public void siMiMv(@Param String mvid, Response response) {
+        try {
+            response.json(videoService.siMiMv(mvid));
         } catch (Exception e) {
             e.printStackTrace();
         }

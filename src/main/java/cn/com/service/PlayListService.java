@@ -8,6 +8,7 @@ import cn.com.model.UrlParam;
 import com.blade.ioc.annotation.Bean;
 import com.blade.ioc.annotation.Inject;
 
+
 @Bean
 public class PlayListService {
 
@@ -41,6 +42,24 @@ public class PlayListService {
     public String topPlaylist(String order, String cat, Integer limit, Integer offset) throws Exception {
         String url = mp.baseUrl + mp.topPlaylist;
         UrlParam up = Api.topPlaylist(url, order, cat, limit, offset);
+        return SendRequest.getMusicData(up);
+    }
+
+    public String personalizedMv() throws Exception{
+        String url = mp.baseUrl + mp.personalizedMv;
+        UrlParam up = Api.open(url);
+        return SendRequest.getMusicData(up);
+    }
+
+    public String discoverySiMiPlaylist(String id, Integer limit, Integer offset) throws Exception {
+        String url = mp.baseUrl + mp.discoverySiMiPlaylist;
+        UrlParam up = Api.discoverySiMiPlaylist(url,id,limit, offset);
+        return SendRequest.getMusicData(up);
+    }
+
+    public String topPlaylistHighQuality(String cat, Integer limit, String lasttime) throws Exception{
+        String url = mp.baseUrl + mp.topPlaylistHighQuality;
+        UrlParam up = Api.topPlaylistHighQuality(url,cat,limit, lasttime);
         return SendRequest.getMusicData(up);
     }
 }

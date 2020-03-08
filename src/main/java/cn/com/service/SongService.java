@@ -49,4 +49,10 @@ public class SongService {
         UrlParam up = Api.topSong(url, type);
         return SendRequest.getMusicData(up);
     }
+
+    public String siMiSong(String id, Integer limit, Integer offset)throws Exception {
+        String url = mp.baseUrl + mp.siMiSong;
+        UrlParam up = Api.discoverySiMiPlaylist(url,id ,limit,offset);
+        return SendRequest.getMusicData(up);
+    }
 }

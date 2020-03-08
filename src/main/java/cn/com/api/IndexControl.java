@@ -35,7 +35,7 @@ public class IndexControl {
     @GetRoute
     public String index(Request request) {
         request.attribute("domain", mp.domain);
-        return "music.html";
+        return "music/index.html";
     }
 
 

@@ -55,4 +55,17 @@ public class VideoService {
         UrlParam up = Api.commentMv(url, id, limit, offset);
         return SendRequest.getMusicData(up);
     }
+
+
+    public String mvAll(String area, String order, String type, Integer limit, Integer offset) throws Exception{
+        String url = mp.mvAll;
+        UrlParam up = Api.mvAll(url,area,order,type, limit, offset);
+        return SendRequest.getMusicData(up);
+    }
+
+    public String siMiMv(String mvid) throws Exception{
+        String url = mp.baseUrl + mp.siMiMv;
+        UrlParam up = Api.siMiMv(url, mvid);
+        return SendRequest.getMusicData(up);
+    }
 }

@@ -1,10 +1,11 @@
 package cn.com.utils;
 
 
-
 import cn.com.model.UrlParam;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -246,6 +247,75 @@ public class Api {
         up.addParam("limit", limit);
         up.addParam("offset", offset);
         up.addParam("total", true);
+        return up;
+    }
+
+    public static UrlParam albumSublist(String url, Integer limit, Integer offset) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        up.addParam("limit", limit);
+        up.addParam("offset", offset);
+        up.addParam("total", true);
+        return up;
+    }
+
+    public static UrlParam albumArtists(String url, Integer limit, Integer offset) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        up.addParam("limit", limit);
+        up.addParam("offset", offset);
+        up.addParam("total", true);
+        return up;
+    }
+
+    public static UrlParam dynamic(String url, String id) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        up.addParam("id", id);
+        return up;
+    }
+
+    public static UrlParam discoverySiMiPlaylist(String url, String id, Integer limit, Integer offset) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        up.addParam("songid", id);
+        up.addParam("limit", limit);
+        up.addParam("offset", offset);
+        return up;
+    }
+    public static UrlParam topPlaylistHighQuality(String url, String cat, Integer limit, String lasttime) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        up.addParam("cat", cat);
+        up.addParam("limit", limit);
+        up.addParam("lasttime", lasttime);
+        up.addParam("total", true);
+        return up;
+    }
+
+    public static UrlParam mvAll(String url, String area, String order, String type, Integer limit, Integer offset) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        Map<Object,String> m = new HashMap();
+        m.put("地区",area);
+        m.put("类型",order);
+        m.put("排序",type);
+        up.addParam("tags", m);
+        up.addParam("limit", limit);
+        up.addParam("offset", offset);
+        up.addParam("total", true);
+        return up;
+    }
+    public static UrlParam siMiMv(String url, String mvid) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url);
+        up.addParam("mvid", mvid);
+        return up;
+    }
+
+    public static UrlParam userDetail(String url, String uid) {
+        UrlParam up = new UrlParam();
+        up.setUrl(url+"/"+uid);
         return up;
     }
 }

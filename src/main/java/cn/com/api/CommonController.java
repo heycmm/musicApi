@@ -24,16 +24,9 @@ public class CommonController {
         }
     }
 
-    @GetRoute("album")
-    public void album(@Param String id, Response response) {
-        try {
-            response.json(commonService.album(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    @PostRoute("commentHot")
+
+    @GetRoute("comment/hot")
     public void commentHot(
             @Param Integer type,
             @Param String id,
