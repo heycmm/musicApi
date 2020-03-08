@@ -35,9 +35,13 @@ public class IndexControl {
     @GetRoute
     public String index(Request request) {
         request.attribute("domain", mp.domain);
-        return "music/index.html";
+        return "music.html";
     }
-
+    @GetRoute("start")
+    public String start(Request request) {
+        request.attribute("domain", mp.domain);
+        return "index.html";
+    }
 
     @GetRoute("List/:id")
     public void list(@PathParam String id, Response response) {
