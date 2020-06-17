@@ -3,6 +3,8 @@ package cn.com.utils;
 
 import cn.com.model.UrlParam;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -295,15 +297,18 @@ public class Api {
 
     public static UrlParam mvAll(String url, String area, String order, String type, Integer limit, Integer offset) {
         UrlParam up = new UrlParam();
+        try {
+            area   = URLEncoder.encode(area, "utf-8");
+            order   = URLEncoder.encode(order, "utf-8");
+            type   = URLEncoder.encode(type, "utf-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //url="https://interface.music.163.com/api/mv/all?tags={'地区:'"+area+",'全部','"+type+"','排序':'"+order+"'&offset=0&total=true&limit=40";
+        url="https://interface.music.163.com/api/mv/all?tags={%22%E5%9C%B0%E5%8C%BA%22:%22"+area+"%22,%22%E7%B1%BB%E5%9E%8B%22:%22"+type+"%22,%22%E6%8E%92%E5%BA%8F%22:%22"+order+"%22}&offset="+offset+"&total=true&limit="+limit+"";
         up.setUrl(url);
-        Map<Object,String> m = new HashMap();
-        m.put("地区",area);
-        m.put("类型",order);
-        m.put("排序",type);
-        up.addParam("tags", m);
-        up.addParam("limit", limit);
-        up.addParam("offset", offset);
-        up.addParam("total", true);
+
         return up;
     }
     public static UrlParam siMiMv(String url, String mvid) {

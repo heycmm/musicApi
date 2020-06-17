@@ -4,22 +4,16 @@ package cn.com.api;
 import cn.com.config.MusicProperties;
 import cn.com.service.PlayListService;
 import cn.com.service.SongService;
+import com.alibaba.fastjson.JSONObject;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
+import com.blade.mvc.annotation.Param;
 import com.blade.mvc.annotation.Path;
 import com.blade.mvc.annotation.PathParam;
 import com.blade.mvc.http.Request;
 import com.blade.mvc.http.Response;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import java.io.StringReader;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Path
@@ -28,15 +22,16 @@ public class IndexControl {
     @Inject
     private MusicProperties mp;
     @Inject
-    private PlayListService playListService;
-    @Inject
     private SongService songService;
+    @Inject
+    private PlayListService playListService;
 
     @GetRoute
     public String index(Request request) {
         request.attribute("domain", mp.domain);
         return "music.html";
     }
+
     @GetRoute("start")
     public String start(Request request) {
         request.attribute("domain", mp.domain);
@@ -47,51 +42,41 @@ public class IndexControl {
     public void list(@PathParam String id, Response response) {
         try {
             List<Map<String, Object>> collect = null;
-            collect = this.ListObj(playListService.playlistDetail(id, 8));
+            collect = playListService.list(id);
             response.json(collect);
         } catch (Exception e) {
+            e.printStackTrace();
             response.text("Not Found.");
         }
 
     }
 
-
-    @GetRoute("Lrc/:id")
-    public void lrc(@PathParam String id, Response response) {
-        try {
-            String lyric = "";
-            JsonReader reader = Json.createReader(new StringReader(songService.lyric(id)));
-            JsonObject root = reader.readObject();
-            JsonObject object = root.getJsonObject("lrc");
-            if (null != object && object.getValueType() == JsonValue.ValueType.OBJECT) {
-                JsonObject lrcJson = object.asJsonObject();
-                lyric = lrcJson.getString("lyric");
-            }
-            if (null == lyric || "".equals(lyric)) {
-                lyric = mp.defaultLyric;
-            }
-            response.text(lyric);
-        } catch (Exception e) {
-            response.text("Not Found.");
-        }
+    /**
+     * demo
+       <iframe frameborder="no" border="0" marginwidth="0"
+       marginheight="0" border="0" scrolling="no"
+       allowtransparency="yes" width=100%
+       height=102 src="//localhost:8097/player?id=1407551413">
+       </iframe>
+     *
+     * @param type
+     * @param id
+     * @param request
+     * @return
+     */
+    @GetRoute("player")
+    public String player(@Param(defaultValue = "0") String type,
+                         @Param(defaultValue = "0") String id,
+                         Request request) {
+        Map<String, Object> map = songService.player(type, id);
+        request.attribute("music", JSONObject.toJSONString(map));
+        return "player.html";
     }
 
     @GetRoute("Mp3/:id")
     public void mp3(@PathParam String id, Response response) {
         try {
-            String url = "";
-            JsonReader reader = Json.createReader(new StringReader(songService.songUrl(id, 999000)));
-            JsonObject root = reader.readObject();
-            url = root
-                    .getJsonArray("data")
-                    .stream()
-                    .map(obj -> {
-                        String u = "";
-                        if (null != obj && obj.getValueType() == JsonValue.ValueType.OBJECT) {
-                            u = obj.asJsonObject().getString("url");
-                        }
-                        return u;
-                    }).collect(Collectors.joining());
+            String url = songService.mp3(id);
             if (null == url || "".equals(url)) {
                 response.text("Not Found.");
             } else {
@@ -100,46 +85,19 @@ public class IndexControl {
         } catch (Exception e) {
             response.text("Not Found.");
         }
-
-
     }
 
-    public List<Map<String, Object>> ListObj(String up) {
+    @GetRoute("Lrc/:id")
+    public void lrc(@PathParam String id, Response response) {
         try {
-            JsonReader reader = Json.createReader(new StringReader(up));
-            JsonObject root = reader.readObject();
-            return root.getJsonObject("playlist")
-                    .getJsonArray("tracks")
-                    .stream()
-                    .map(tr -> {
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        if (null != tr && tr.getValueType() == JsonValue.ValueType.OBJECT) {
-                            JsonObject obj = tr.asJsonObject();
-                            String name = obj.getString("name");
-                            map.put("name", name);
-                            String picUrl = "";
-                            String trackId = String.valueOf(obj.get("id"));
-                            map.put("url", mp.domain + "/Mp3/" + trackId);
-                            map.put("lrc", mp.domain + "/Lrc/" + trackId);
-                            JsonObject alObj = obj.getJsonObject("al");
-                            picUrl = alObj.getString("picUrl");
-                            if (null != picUrl && !"".equals(picUrl)) {
-                                picUrl = picUrl.replaceFirst("http", "https");
-                            }
-                            map.put("cover", picUrl + "?param=300y300");
-                            obj.getJsonArray("ar")
-                                    .forEach(ar -> {
-                                        if (null != ar && ar.getValueType() == JsonValue.ValueType.OBJECT) {
-                                            JsonObject arObj = ar.asJsonObject();
-                                            String arname = arObj.getString("name");
-                                            map.put("artist", arname);
-                                        }
-                                    });
-                        }
-                        return map;
-                    }).collect(Collectors.toList());
-        } catch (Exception ex) {
-            return null;
+            String lyric = songService.lrc(id);
+            if (null == lyric || "".equals(lyric)) {
+                lyric = mp.defaultLyric;
+            }
+            response.text(lyric);
+
+        } catch (Exception e) {
+            response.text("Not Found.");
         }
     }
 }

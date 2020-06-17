@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>音乐盒🎵</title>
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <meta itemprop="image" content="/static/img/IMG_8123.JPG">
+    <link rel="shortcut icon" type="images/x-icon" href="/static/img/IMG_8123.JPG">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
+    <style>
+        .aplayer .aplayer-lrc p.aplayer-lrc-current {
+            color: #7800b5 !important;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div id="aplayer"></div>
+</body>
+<script type="text/javascript">
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        theme: '#FADFA3',
+        loop: 'none',
+        volume: 0.9,
+        lrcType: 3,
+        audio: [${music}]
+    });
+</script>
+</html>

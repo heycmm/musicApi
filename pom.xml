@@ -10,11 +10,9 @@
     <description>musicApi project for Blade</description>
 
     <properties>
-        <blade-mvc.version>2.0.14.RELEASE</blade-mvc.version>
-        <fastjson.version>1.2.41</fastjson.version>
+        <blade-mvc.version>2.0.15.RELEASE</blade-mvc.version>
+        <fastjson.version>1.2.70</fastjson.version>
         <lombok.version>1.18.12</lombok.version>
-        <javax.json.version>1.1.4</javax.json.version>
-        <jsoup.version>1.12.2</jsoup.version>
         <java.version>8</java.version>
     </properties>
 
@@ -33,17 +31,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
-            <version>${javax.json.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
         </dependency>
     </dependencies>
 

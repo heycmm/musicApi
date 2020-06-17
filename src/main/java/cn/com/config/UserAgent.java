@@ -28,4 +28,18 @@ public interface UserAgent {
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/13.10586"
     };
+    static String randomUa(String ua) {
+        int index = 0;
+        if (null == ua || ua == "") {
+            index = (int) Math.floor(Math.random() * uas.length);
+        } else if (ua.equals("mobile")) {
+            index = (int) Math.floor(Math.random() * 7);
+        } else if (ua.equals("pc")) {
+            index = (int) (Math.floor(Math.random() * 5) + 8);
+        } else {
+            return ua;
+        }
+        return uas[index];
+
+    }
 }

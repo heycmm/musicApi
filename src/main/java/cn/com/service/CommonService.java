@@ -2,7 +2,7 @@ package cn.com.service;
 
 
 import cn.com.utils.Api;
-import cn.com.utils.SendRequest;
+import cn.com.utils.Get;
 import cn.com.config.MusicProperties;
 import cn.com.model.UrlParam;
 import com.blade.ioc.annotation.Bean;
@@ -20,7 +20,7 @@ public class CommonService {
         } else {
             String url = mp.baseUrl + mp.banner;
             UrlParam up = Api.banner(url, type);
-            return SendRequest.getMusicData(up);
+            return Get.getMusicData(up);
         }
     }
 
@@ -50,7 +50,7 @@ public class CommonService {
             return "类型错误！";
         }
         UrlParam up = Api.commentMusic(url, id, limit, offset);
-        return SendRequest.getMusicData(up);
+        return Get.getMusicData(up);
     }
 
 

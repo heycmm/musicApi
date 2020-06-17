@@ -1,9 +1,9 @@
 package cn.com.service;
 
 import cn.com.utils.Api;
-import cn.com.utils.SendRequest;
 import cn.com.config.MusicProperties;
 import cn.com.model.UrlParam;
+import cn.com.utils.Get;
 import com.alibaba.fastjson.JSONObject;
 import com.blade.ioc.annotation.Bean;
 import com.blade.ioc.annotation.Inject;
@@ -23,7 +23,7 @@ public class UserService {
         String url = mp.baseUrl + mp.loginCellphone;
         String encryptionPw = this.MD5_SHA(password,"MD5");
         UrlParam up = Api.loginCellphone(url, phone, encryptionPw);
-        String musicData = SendRequest.getMusicData(up);
+        String musicData = Get.getMusicData(up);
         JSONObject result = JSONObject.parseObject(musicData);
         String cookie = result.getString("cookie");
         if (!StringKit.isBlank(cookie)) {
@@ -39,25 +39,25 @@ public class UserService {
         String url = mp.baseUrl + mp.login;
         String encryptionPw = this.MD5_SHA(password,"MD5");
         UrlParam up = Api.login(url, email, encryptionPw);
-        return SendRequest.getMusicData(up);
+        return Get.getMusicData(up);
     }
 
     public String recommendSongs(String cookie) throws Exception {
         String url = mp.baseUrl + mp.recommendSongs;
         UrlParam up = Api.recommendSongs(url, cookie);
-        return SendRequest.getMusicDataByCookie(up);
+        return Get.getMusicDataByCookie(up);
     }
 
     public String recommendResource(String cookie) throws Exception {
         String url = mp.baseUrl + mp.recommendResource;
         UrlParam up = Api.recommendResource(url, cookie);
-        return SendRequest.getMusicDataByCookie(up);
+        return Get.getMusicDataByCookie(up);
     }
 
     public String userPlayList(String uid, Integer limit, Integer offset) throws Exception {
         String url = mp.baseUrl + mp.userPlayList;
         UrlParam up = Api.userPlayList(url, uid, limit, offset);
-        return SendRequest.getMusicData(up);
+        return Get.getMusicData(up);
     }
     public final static String MD5_SHA(String s, String method) {
         char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -84,6 +84,6 @@ public class UserService {
     public String userDetail(String uid) throws Exception{
         String url = mp.baseUrl + mp.userDetail;
         UrlParam up = Api.userDetail(url, uid);
-        return SendRequest.getMusicData(up);
+        return Get.getMusicData(up);
     }
 }
