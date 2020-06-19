@@ -12,6 +12,7 @@ import com.blade.mvc.annotation.Path;
 import com.blade.mvc.annotation.PathParam;
 import com.blade.mvc.http.Request;
 import com.blade.mvc.http.Response;
+
 import java.util.List;
 import java.util.Map;
 
@@ -29,14 +30,14 @@ public class IndexControl {
     @GetRoute
     public String index(Request request) {
         request.attribute("domain", mp.domain);
-        return "music.html";
+        return "index.html";
     }
-
+/*
     @GetRoute("start")
     public String start(Request request) {
         request.attribute("domain", mp.domain);
         return "index.html";
-    }
+    }*/
 
     @GetRoute("List/:id")
     public void list(@PathParam String id, Response response) {
@@ -53,11 +54,11 @@ public class IndexControl {
 
     /**
      * demo
-       <iframe frameborder="no" border="0" marginwidth="0"
-       marginheight="0" border="0" scrolling="no"
-       allowtransparency="yes" width=100%
-       height=102 src="//localhost:8097/player?id=1407551413">
-       </iframe>
+     * <iframe frameborder="no" border="0" marginwidth="0"
+     * marginheight="0" border="0" scrolling="no"
+     * allowtransparency="yes" width=100%
+     * height=102 src="//localhost:8097/player?id=1407551413">
+     * </iframe>
      *
      * @param type
      * @param id
@@ -87,10 +88,49 @@ public class IndexControl {
         }
     }
 
+    @GetRoute("getMp3Url/:id")
+    public void getMp3Url(@PathParam String id, Response response) {
+        try {
+
+            response.text(songService.mp3(id));
+
+        } catch (Exception e) {
+            response.text("Not Found.");
+        }
+    }
+
     @GetRoute("Lrc/:id")
     public void lrc(@PathParam String id, Response response) {
         try {
             String lyric = songService.lrc(id);
+            if (null == lyric || "".equals(lyric)) {
+                lyric = mp.defaultLyric;
+            }
+            response.text(lyric);
+
+        } catch (Exception e) {
+            response.text("Not Found.");
+        }
+    }
+
+    @GetRoute("qqMp3/:id")
+    public void qqMp3(@PathParam String id, Response response) {
+        try {
+            String url = songService.qqMp3(id);
+            if (null == url || "".equals(url)) {
+                response.text("Not Found.");
+            } else {
+                response.redirect(url);
+            }
+        } catch (Exception e) {
+            response.text("Not Found.");
+        }
+    }
+
+    @GetRoute("qqLrc/:id")
+    public void qqLrc(@PathParam String id, Response response) {
+        try {
+            String lyric = songService.qqLrc(id);
             if (null == lyric || "".equals(lyric)) {
                 lyric = mp.defaultLyric;
             }

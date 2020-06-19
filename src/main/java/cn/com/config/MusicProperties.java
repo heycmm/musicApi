@@ -194,5 +194,11 @@ public class MusicProperties {
     public String userDetail;
 
 
+    @Value(name = "qqBaseUrl")
+    public String qqBaseUrl;
+
+    //获取歌词
+    @Value(name ="fcg_query_lyric_new")
+    public String fcg_query_lyric_new;
 
 }

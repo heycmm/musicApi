@@ -2235,8 +2235,12 @@ public final class Request {
         return this;
     }
 
+    /**
+     * cookie 处理
+     * @return 合并后的cookie
+     */
     public String cookie() {
-        return header(SET_COOKIE);
+        return String.join("; ", headers(SET_COOKIE));
     }
 
     public Request cookie(String cookie) {

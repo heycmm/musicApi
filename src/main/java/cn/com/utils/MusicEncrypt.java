@@ -1,6 +1,7 @@
 package cn.com.utils;
 
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -95,7 +96,7 @@ public class MusicEncrypt {
      */
     public static String aesEncrypt(String content, String sKey) throws Exception {
         byte[] encryptedBytes;
-        byte[] byteContent = content.getBytes("UTF-8");
+        byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
         // 获取cipher对象，getInstance("算法/工作模式/填充模式")
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         // 采用AES方式将密码转化成密钥

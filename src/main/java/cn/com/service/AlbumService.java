@@ -27,7 +27,7 @@ public class AlbumService {
     public String albumSublist(Integer limit, Integer offset) throws Exception{
         String url = mp.baseUrl + mp.albumSublist;
         UrlParam up = Api.albumSublist(url,limit,offset);
-        return Get.getMusicDataByCookie(up);
+        return Get.getMusicData(up);
     }
     public String album(String id) throws Exception {
         String url = mp.baseUrl + mp.album + "/" + id;

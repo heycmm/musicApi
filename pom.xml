@@ -14,6 +14,7 @@
         <fastjson.version>1.2.70</fastjson.version>
         <lombok.version>1.18.12</lombok.version>
         <java.version>8</java.version>
+        <lettuce.version>5.3.1.RELEASE</lettuce.version>
     </properties>
 
     <dependencies>
@@ -31,6 +32,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>${lettuce.version}</version>
         </dependency>
     </dependencies>
 

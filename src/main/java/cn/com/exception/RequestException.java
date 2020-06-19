@@ -6,7 +6,7 @@ import java.io.IOException;
  * HTTP request exception whose cause is always an {@link IOException}
  *
  * @author czx.me
- * @date 2017/9/30
+ * @date 2019/9/30
  */
 public class RequestException extends RuntimeException {
 

@@ -19,7 +19,7 @@ public class UserController {
     @GetRoute("loginCellphone")
     public void loginCellphone(@Param String phone, @Param String password, Response response) {
         try {
-            response.json(userService.loginCellphone(phone, password, response));
+            response.json(userService.loginCellphone(phone, password));
         } catch (Exception e) {
             e.printStackTrace();
         }
