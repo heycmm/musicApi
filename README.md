@@ -10,6 +10,8 @@ redis
 
 ## 部署
 
+也可以直接在<a href="https://github.com/proxygit/musicApi/releases" target="_blank">releases</a>下载
+
 mvn package
 
 cd target
