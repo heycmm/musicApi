@@ -17,13 +17,18 @@ cd target
 java -jar musicApi.jar
 
 ## 食用方法
-网易云会员登陆：`curl "http://127.0.0.1:8097/loginCellphone?phone=你的手机号&password=密码"`
+
+### 网易云会员登陆：
+
+`curl "http://127.0.0.1:8097/loginCellphone?phone=你的手机号&password=密码"`
 
 成功后将会往redis存入你的登陆cookie
 
 验证登陆状态(每日歌曲推荐接口)：`curl "http://127.0.0.1:8097/recommendSongs"`
 
-qq音乐会员登陆: 去`https://y.qq.com/portal/profile.html`
+### qq音乐会员登陆:
+ 
+ 去`https://y.qq.com/portal/profile.html`
 
 登陆后
 
