@@ -1,13 +1,18 @@
 package cn.com.api;
 
 
+import cn.com.redis.RedisUtil;
 import cn.com.service.UserService;
+import cn.com.utils.Cookie;
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.*;
 import com.blade.mvc.http.Request;
 import com.blade.mvc.http.Response;
 
 import java.net.URLDecoder;
+import java.util.Map;
+
+import static cn.com.common.Constant.COOKIE_KEY;
 
 
 @Path
@@ -35,20 +40,20 @@ public class UserController {
     }
 
     @GetRoute("recommendSongs")
-    public void recommendSongs(@CookieParam("WY_TOKEN") String token,Response response) {
+    public void recommendSongs(Response response) {
         try {
-            String cookie = URLDecoder.decode(token, "utf-8");
-            response.json(userService.recommendSongs(cookie));
+            Map<String, String> stringStringMap = RedisUtil.get(COOKIE_KEY);
+            response.json(userService.recommendSongs(Cookie.parseMapStr(stringStringMap)));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @GetRoute("recommendResource")
-    public void recommendResource(@CookieParam("WY_TOKEN") String token, Request request,Response response) {
+    public void recommendResource(Response response) {
         try {
-            String cookie = URLDecoder.decode(token, "utf-8");
-            response.json(userService.recommendResource(cookie));
+            Map<String, String> stringStringMap = RedisUtil.get(COOKIE_KEY);
+            response.json(userService.recommendResource(Cookie.parseMapStr(stringStringMap)));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package cn.com.webHook;
 
 
-import cn.com.redis.RedisUtil;
 import com.blade.ioc.annotation.Bean;
 import com.blade.mvc.RouteContext;
 import com.blade.mvc.hook.WebHook;
@@ -24,7 +23,7 @@ public class AccessHook implements WebHook {
         response.contentType("text/plain;charset=utf-8");
         response.header("Access-Control-Allow-Origin", origin);
         response.header("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS, DELETE");
-        response.header("Access-Control-Allow-Headers", "Content-Type, x-requested-with, X-Custom-Header, HaiYi-Access-Token");
+        response.header("Access-Control-Allow-Headers", "Content-Type, x-requested-with, X-Custom-Header");
         return true;
     }
 
