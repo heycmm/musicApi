@@ -1,20 +1,20 @@
 package cn.com.webHook;
 
 
+import cn.com.redis.RedisUtil;
 import com.blade.ioc.annotation.Bean;
 import com.blade.mvc.RouteContext;
 import com.blade.mvc.hook.WebHook;
 import com.blade.mvc.http.Response;
-import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
+
 
 /**
  * @author：czx.me 2020/6/18
  */
-@Slf4j
 @Bean
 public class AccessHook implements WebHook {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebHook.class);
     @Override
     public boolean before(RouteContext ctx) {
         log.info("Host =>{},UserAgent =>{},Client Address =>{},origin =>{}，referer =>{}", ctx.header("Host")
