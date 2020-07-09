@@ -75,9 +75,11 @@ public final class Request {
                 public X509Certificate[] getAcceptedIssuers() {
                     return new X509Certificate[0];
                 }
+
                 public void checkClientTrusted(X509Certificate[] chain, String authType) {
                     // Intentionally left blank
                 }
+
                 public void checkServerTrusted(X509Certificate[] chain, String authType) {
                     // Intentionally left blank
                 }
@@ -87,8 +89,7 @@ public final class Request {
                 context.init(null, trustAllCerts, new SecureRandom());
                 TRUSTED_FACTORY = context.getSocketFactory();
             } catch (GeneralSecurityException e) {
-                IOException ioException = new IOException("Security exception configuring SSL context");
-                ioException.initCause(e);
+                IOException ioException = new IOException("Security exception configuring SSL context", e);
                 throw new RequestException(ioException);
             }
         }
@@ -100,7 +101,6 @@ public final class Request {
             TRUSTED_VERIFIER = (hostname, session) -> true;
         return TRUSTED_VERIFIER;
     }
-
 
 
     /**
@@ -479,7 +479,7 @@ public final class Request {
     public static void nonProxyHosts(final String... hosts) {
         if (hosts != null && hosts.length > 0) {
             StringBuilder separated = new StringBuilder();
-            int           last      = hosts.length - 1;
+            int last = hosts.length - 1;
             for (int i = 0; i < last; i++)
                 separated.append(hosts[i]).append('|');
             separated.append(hosts[last]);
@@ -1208,7 +1208,7 @@ public final class Request {
             return Collections.emptyMap();
 
         final int headerLength = header.length();
-        int       start        = header.indexOf(';') + 1;
+        int start = header.indexOf(';') + 1;
         if (start == 0 || start == headerLength)
             return Collections.emptyMap();
 
@@ -1222,8 +1222,8 @@ public final class Request {
             if (nameEnd != -1 && nameEnd < end) {
                 String name = header.substring(start, nameEnd).trim();
                 if (name.length() > 0) {
-                    String value  = header.substring(nameEnd + 1, end).trim();
-                    int    length = value.length();
+                    String value = header.substring(nameEnd + 1, end).trim();
+                    int length = value.length();
                     if (length != 0)
                         if (length > 2 && '"' == value.charAt(0) && '"' == value.charAt(length - 1))
                             params.put(name, value.substring(1, length - 1));
@@ -1253,7 +1253,7 @@ public final class Request {
             return null;
 
         final int length = value.length();
-        int       start  = value.indexOf(';') + 1;
+        int start = value.indexOf(';') + 1;
         if (start == 0 || start == length)
             return null;
 
@@ -1265,8 +1265,8 @@ public final class Request {
             int nameEnd = value.indexOf('=', start);
             if (nameEnd != -1 && nameEnd < end
                     && paramName.equals(value.substring(start, nameEnd).trim())) {
-                String paramValue  = value.substring(nameEnd + 1, end).trim();
-                int    valueLength = paramValue.length();
+                String paramValue = value.substring(nameEnd + 1, end).trim();
+                int valueLength = paramValue.length();
                 if (valueLength != 0)
                     if (valueLength > 2 && '"' == paramValue.charAt(0)
                             && '"' == paramValue.charAt(valueLength - 1))
@@ -1589,7 +1589,7 @@ public final class Request {
             @Override
             public Request run() throws IOException {
                 final byte[] buffer = new byte[bufferSize];
-                int          read;
+                int read;
                 while ((read = input.read(buffer)) != -1) {
                     output.write(buffer, 0, read);
                     totalWritten += read;
@@ -1615,7 +1615,7 @@ public final class Request {
             @Override
             public Request run() throws IOException {
                 final char[] buffer = new char[bufferSize];
-                int          read;
+                int read;
                 while ((read = input.read(buffer)) != -1) {
                     output.write(buffer, 0, read);
                     totalWritten += read;
@@ -2237,6 +2237,7 @@ public final class Request {
 
     /**
      * cookie 处理
+     *
      * @return 合并后的cookie
      */
     public String cookie() {
@@ -2244,7 +2245,19 @@ public final class Request {
     }
 
     public Request cookie(String cookie) {
-        return header(COOKIE,cookie);
+        return header(COOKIE, cookie);
     }
 
+
+    public Request json(final String json)
+            throws RequestException {
+        contentType(CONTENT_TYPE_JSON, CHARSET_UTF8);
+        try {
+            openOutput();
+            output.write(json);
+        } catch (IOException e) {
+            throw new RequestException(e);
+        }
+        return this;
+    }
 }

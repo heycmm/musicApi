@@ -22,9 +22,8 @@ public class UrlParam {
         this.params = new JSONObject();
     }
 
-    public UrlParam addParam(String key, Object value) {
+    public void addParam(String key, Object value) {
         this.params.put(key, value.toString());
-        return this;
     }
     public HashMap<String, String> encrypt() throws Exception {
         return   MusicEncrypt.getData(this.params.toJSONString());

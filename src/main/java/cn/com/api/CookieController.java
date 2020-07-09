@@ -6,7 +6,6 @@ import com.blade.mvc.annotation.Param;
 import com.blade.mvc.annotation.Path;
 import com.blade.mvc.annotation.PostRoute;
 import com.blade.mvc.http.Response;
-
 import java.util.Map;
 
 import static cn.com.common.Constant.QQ_COOKIE_KEY;
@@ -32,5 +31,4 @@ public class CookieController {
             }
         }
     }
-
 }

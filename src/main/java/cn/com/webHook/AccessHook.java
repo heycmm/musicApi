@@ -1,7 +1,6 @@
 package cn.com.webHook;
 
 
-import com.blade.ioc.annotation.Bean;
 import com.blade.mvc.RouteContext;
 import com.blade.mvc.hook.WebHook;
 import com.blade.mvc.http.Response;
@@ -11,9 +10,8 @@ import com.blade.mvc.http.Response;
 /**
  * @author：czx.me 2020/6/18
  */
-@Bean
 public class AccessHook implements WebHook {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebHook.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AccessHook.class);
     @Override
     public boolean before(RouteContext ctx) {
         log.info("Host =>{},UserAgent =>{},Client Address =>{},origin =>{}，referer =>{}", ctx.header("Host")
@@ -27,10 +25,5 @@ public class AccessHook implements WebHook {
         return true;
     }
 
-    @Override
-    public boolean after(RouteContext context) {
-
-        return true;
-    }
 }
 
