@@ -13,7 +13,7 @@
         <blade-mvc.version>2.0.15.RELEASE</blade-mvc.version>
         <fastjson.version>1.2.83</fastjson.version>
         <java.version>8</java.version>
-        <lettuce.version>5.3.1.RELEASE</lettuce.version>
+        <lettuce.version>6.5.1.RELEASE</lettuce.version>
     </properties>
 
     <dependencies>
